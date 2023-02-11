@@ -16,7 +16,28 @@ class CartItem extends React.Component{
     }
     //third way arrow function bind this with the instance of the class automatically
     increaseQuantity=()=>{
-        console.log('this',this.state);
+        // console.log('this',this.state);
+        //to increase the qty the simple code is coming in mind is this.state.qty +=1 in console it will increase but not on our screen because react dosenot know that things got changed and need to re-render
+        //to overcome it we use setState.calling setstate rerender that component with updated value.what happen is react merge the setstae object with  this object and it is known as shallow merging and it is of two kind
+        //setState Form 1:- it is used when previous state is not needed.and it is object type 
+        /* this.setState({
+        //     title:"some new title"
+        // });*/
+        /*this.setState({
+            qty:this.state.qty+1
+        });*/
+          //setState Form 2:- it is used when previous state is needed.and it is function type using callback function
+
+          
+            this.setState((prevState)=>{
+                return{
+                    qty:prevState.qty+ 1
+                }
+            });
+          
+
+
+
     }
     render(){
         // we are using object destructuring so that we do not need to write this.state.price again n again
