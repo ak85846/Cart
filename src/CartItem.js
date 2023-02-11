@@ -11,6 +11,12 @@ class CartItem extends React.Component{
             qty:1,
             img:''
         }
+        // second way fon binding if we have so many evenhandler we can bind it here but hat is also bit lengthy so third way is arrow function .
+        // this.increaseQuantity=this.increaseQuantity.bind(this);
+    }
+    //third way arrow function bind this with the instance of the class automatically
+    increaseQuantity=()=>{
+        console.log('this',this.state);
     }
     render(){
         // we are using object destructuring so that we do not need to write this.state.price again n again
@@ -26,7 +32,12 @@ class CartItem extends React.Component{
                     <div style={{color:'#777'}}>Qty: {qty}</div>
                     <div className="cart-item-actions">
                         {/* Buttons */}
-                        <img alt="increase" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/992/992651.png" />
+                        <img alt="increase" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/992/992651.png" 
+                        // this will give an error because we are passing a instance and internally react is calling increaseQuantity function so the value is lost so we have to bind it
+                        // onClick={this.increaseQuantity}
+                        // whenever the object is created using this call this will be our object.the first way is written down but this way isbit longer so we will do the binding thing in constructor
+                        onClick={this.increaseQuantity.bind(this)}
+                        />
                         <img alt="decrease" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/992/992683.png" />
                         <img alt="delete" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" />
                         
