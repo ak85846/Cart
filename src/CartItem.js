@@ -14,6 +14,23 @@ class CartItem extends React.Component{
         // second way fon binding if we have so many evenhandler we can bind it here but hat is also bit lengthy so third way is arrow function .
         // this.increaseQuantity=this.increaseQuantity.bind(this);
     }
+    /*
+    before react version 17 it was kind of a gap or something in react that the otput was 31 of qty because setState in ajax call ,promises becomes synchronus. in curren react version 18 .this code is not executing now.we will see it later.
+    testing(){
+        const promise= new promise((resolve,reject) =>{
+            setTimeout(()=>{
+        resolve('done');
+            },500);
+        })
+        promise.then(()=>{
+            //setState acts like a synchronus call
+            this.setState({qty: this.state.qty + 10});
+            this.setState({qty: this.state.qty + 10});
+            this.setState({qty: this.state.qty + 10});
+
+            console.log('state',this.state);
+        });
+    }*/
     //third way arrow function bind this with the instance of the class automatically
     increaseQuantity=()=>{
         // console.log('this',this.state);
