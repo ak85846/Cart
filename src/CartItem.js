@@ -13,24 +13,28 @@ class CartItem extends React.Component{
         }
         // second way fon binding if we have so many evenhandler we can bind it here but hat is also bit lengthy so third way is arrow function .
         // this.increaseQuantity=this.increaseQuantity.bind(this);
+        // this.testing();
     }
-    /*
-    before react version 17 it was kind of a gap or something in react that the otput was 31 of qty because setState in ajax call ,promises becomes synchronus. in curren react version 18 .this code is not executing now.we will see it later.
-    testing(){
-        const promise= new promise((resolve,reject) =>{
-            setTimeout(()=>{
+    
+   /* before react version 17 it was kind of a gap or something in react that the otput was 31 of qty because setState in ajax call ,promises becomes synchronus. in current react version 18 .this code is problem got resolved and the output is 11 it means it got binded and got shallow merge.
+ testing () {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
         resolve('done');
-            },500);
-        })
-        promise.then(()=>{
-            //setState acts like a synchronus call
-            this.setState({qty: this.state.qty + 10});
-            this.setState({qty: this.state.qty + 10});
-            this.setState({qty: this.state.qty + 10});
+      }, 5000);
+    })
 
-            console.log('state',this.state);
-        });
-    }*/
+    promise.then(() => {
+      // setState acts like a synchronus call
+      this.setState({ qty: this.state.qty + 10 });
+
+      this.setState({ qty: this.state.qty + 10 });
+
+      this.setState({ qty: this.state.qty + 10 });
+
+      console.log('state', this.state);
+    });
+  }*/
     //third way arrow function bind this with the instance of the class automatically
     increaseQuantity=()=>{
         // console.log('this',this.state);
@@ -139,7 +143,7 @@ class CartItem extends React.Component{
                         <img alt="increase" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/992/992651.png" 
                         // this will give an error because we are passing a instance and internally react is calling increaseQuantity function so the value is lost so we have to bind it
                         // onClick={this.increaseQuantity}
-                        // whenever the object is created using this call this will be our object.the first way is written down but this way isbit longer so we will do the binding thing in constructor
+                        // whenever the object is created using this call this will be our object.the first way is onClick={this.increaseQuantity.bind(this)}. but this way isbit longer so we will do the binding thing in constructor
                         onClick={this.increaseQuantity}
                         />
                         <img alt="decrease" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/992/992683.png" 
