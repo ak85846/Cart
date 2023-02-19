@@ -140,7 +140,7 @@ class CartItem extends React.Component{
         const {price,title,qty}=this.props;
         */
        const {price,title,qty}=this.props.product;
-       const {product,onIncreaseQuantity,onDecreaseQuantity}=this.props;
+       const {product,onIncreaseQuantity,onDecreaseQuantity,onDeleteProduct}=this.props;
         return(
             <div className="cart-item">
                 {/* it is to show the working of prop whose name is jsx 
@@ -173,7 +173,9 @@ class CartItem extends React.Component{
                          //onClick={() => this.props.onDecreaseQuantity(this.props.product)}
                          onClick={() =>onDecreaseQuantity(product)}
                         />
-                        <img alt="delete" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" />
+                        <img alt="delete" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                        onClick={() =>onDeleteProduct(product.id)}
+                        />
                         
                     </div>
                 </div>

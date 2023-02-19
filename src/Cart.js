@@ -62,6 +62,15 @@ handleDecreaseQuantity =(product) => {
   })
   
   }
+
+  handleDeleteProduct=(id)=>{
+  const {products}=this.state;
+//filter will only retur product which doe not have the id which is passed here.
+  const items=products.filter((item)=>item.id !=id);
+  this.setState({
+    products:items
+  })
+  }
   render(){
     const {products}= this.state;
     return (
@@ -80,6 +89,8 @@ handleDecreaseQuantity =(product) => {
           key={product.id}
           onIncreaseQuantity={this.handleIncreaseQuantity}
           onDecreaseQuantity={this.handleDecreaseQuantity}
+          onDeleteProduct={this.handleDeleteProduct}
+
           /* for demo
           // func={()=>console.log('hey Ajay')}
           // isLoggedin={false}
