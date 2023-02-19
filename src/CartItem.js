@@ -1,6 +1,6 @@
 import React from "react";
-
-class CartItem extends React.Component{
+//we are making it function component
+//class CartItem extends React.Component{
     /*we don't need state here because of data comig from cart using props we will shift it to cart.js
     constructor(){
         //super is calling constructor of component class for not getting error
@@ -129,18 +129,25 @@ class CartItem extends React.Component{
             }
         });
     }         */
-    render(){
+   // render(){
 
         // we are using object destructuring so that we do not need to write this.state.price again n again
         //const {price,title,qty}=this.state;
         
-        console.log("this.props",this.props)
+       // console.log("this.props",this.props)
         // instead of using state we ae using props because we are passing data from cart
         /*first way
         const {price,title,qty}=this.props;
         */
+
+       /* now as it is func based component we can not use this keyword
        const {price,title,qty}=this.props.product;
        const {product,onIncreaseQuantity,onDecreaseQuantity,onDeleteProduct}=this.props;
+*/
+//function based cartitem component
+const CartItem = (props)=>{
+const {price,title,qty}=props.product;
+       const {product,onIncreaseQuantity,onDecreaseQuantity,onDeleteProduct}=props;
         return(
             <div className="cart-item">
                 {/* it is to show the working of prop whose name is jsx 
@@ -183,7 +190,7 @@ class CartItem extends React.Component{
 
         );
     }
-}
+//}
 
 const styles ={
     image: {
