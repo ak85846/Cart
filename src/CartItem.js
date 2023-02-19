@@ -1,6 +1,7 @@
 import React from "react";
 
 class CartItem extends React.Component{
+    /*we don't need state here because of data comig from cart using props we will shift it to cart.js
     constructor(){
         //super is calling constructor of component class for not getting error
         super();
@@ -15,6 +16,7 @@ class CartItem extends React.Component{
         // this.increaseQuantity=this.increaseQuantity.bind(this);
         // this.testing();
     }
+    */
     
    /* before react version 17 it was kind of a gap or something in react that the otput was 31 of qty because setState in ajax call ,promises becomes synchronus. in current react version 18 .this code is problem got resolved and the output is 11 it means it got binded and got shallow merge.
  testing () {
@@ -127,10 +129,21 @@ class CartItem extends React.Component{
         });
     }
     render(){
+
         // we are using object destructuring so that we do not need to write this.state.price again n again
-        const {price,title,qty}=this.state;
+        //const {price,title,qty}=this.state;
+        
+        console.log("this.props",this.props)
+        // instead of using stae we ae using props because we are passing data from cart
+        /*first way
+        const {price,title,qty}=this.props;
+        */
+       const {price,title,qty}=this.props.product
         return(
             <div className="cart-item">
+                {/* it is to show the working of prop whose name is jsx 
+                  {this.props.jsx} */}
+                {this.props.jsx}
                 <div className="left-block">
                     <img style={styles.image}/>
                 </div>
