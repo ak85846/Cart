@@ -154,7 +154,7 @@ const {price,title,qty}=props.product;
                   {this.props.jsx} */}
                 
                 <div className="left-block">
-                    <img style={styles.image}/>
+                    <img style={styles.image} src={product.img}/>
                 </div>
                 <div className="right-block">
                     <div style={{fontSize:25}}>{title}</div>
