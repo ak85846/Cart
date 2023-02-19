@@ -17,7 +17,8 @@ class CartItem extends React.Component{
         // this.testing();
     }
     */
-    
+    /*****************  
+     * this whole code is not required as the state is in cart.js.so we should not manipulate state vlue fro outside.(we can do but should not)
    /* before react version 17 it was kind of a gap or something in react that the otput was 31 of qty because setState in ajax call ,promises becomes synchronus. in current react version 18 .this code is problem got resolved and the output is 11 it means it got binded and got shallow merge.
  testing () {
     const promise = new Promise((resolve, reject) => {
@@ -36,7 +37,7 @@ class CartItem extends React.Component{
 
       console.log('state', this.state);
     });
-  }*/
+  }  ///
     //third way arrow function bind this with the instance of the class automatically
     increaseQuantity=()=>{
         // console.log('this',this.state);
@@ -63,7 +64,7 @@ class CartItem extends React.Component{
         three times.
         the output will increase by 1 because react shallow merge the all setstate into one setState and this is basically known as batching.
         in shallow merge the last setstate is considered for updation .these merge performed because re-rendering happensonly one time for efficiency.
-           */ 
+           //// 
 
 
           //setState Form 2:- it is used when previous state is needed.and it is function type using callback function
@@ -84,7 +85,7 @@ class CartItem extends React.Component{
             });
             three times then
             re-rendering happens only one because batching occurs here too but  but the value will be inceased by 3 because of callback function.
-            the callback function get stored in queue and the prevState value get updated every time */
+            the callback function get stored in queue and the prevState value get updated every time /////
 
 
            /* our setState command is asynchronus because if we write
@@ -113,7 +114,7 @@ class CartItem extends React.Component{
                 }
             },()=>{});
   
-           */
+           /////
 
 
     }
@@ -127,23 +128,24 @@ class CartItem extends React.Component{
                 qty:prevState.qty-1
             }
         });
-    }
+    }         */
     render(){
 
         // we are using object destructuring so that we do not need to write this.state.price again n again
         //const {price,title,qty}=this.state;
         
         console.log("this.props",this.props)
-        // instead of using stae we ae using props because we are passing data from cart
+        // instead of using state we ae using props because we are passing data from cart
         /*first way
         const {price,title,qty}=this.props;
         */
-       const {price,title,qty}=this.props.product
+       const {price,title,qty}=this.props.product;
+       const {product,onIncreaseQuantity,onDecreaseQuantity}=this.props;
         return(
             <div className="cart-item">
                 {/* it is to show the working of prop whose name is jsx 
                   {this.props.jsx} */}
-                {this.props.jsx}
+                
                 <div className="left-block">
                     <img style={styles.image}/>
                 </div>
@@ -157,10 +159,19 @@ class CartItem extends React.Component{
                         // this will give an error because we are passing a instance and internally react is calling increaseQuantity function so the value is lost so we have to bind it
                         // onClick={this.increaseQuantity}
                         // whenever the object is created using this call this will be our object.the first way is onClick={this.increaseQuantity.bind(this)}. but this way isbit longer so we will do the binding thing in constructor
-                        onClick={this.increaseQuantity}
+                        // onClick={this.increaseQuantity}
+                        //props way 
+                        /* before destucturing
+                        onClick={() => this.props.onIncreaseQuantity(this.props.product)}
+                        */
+                       //after destucturing
+                       onClick={() =>onIncreaseQuantity(product)}
                         />
                         <img alt="decrease" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/992/992683.png" 
-                        onClick={this.decreaseQuantity}
+                        //onClick={this.decreaseQuantity}
+                         //props way
+                         //onClick={() => this.props.onDecreaseQuantity(this.props.product)}
+                         onClick={() =>onDecreaseQuantity(product)}
                         />
                         <img alt="delete" className="action-icons" src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" />
                         
