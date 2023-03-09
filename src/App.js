@@ -1,6 +1,7 @@
 import React from "react";
 import Cart from './Cart';
 import Navbar from './Navbar'
+import firebase from './firebase';
 
 class App extends React.Component {
   constructor(){
@@ -9,6 +10,7 @@ class App extends React.Component {
     //  state is just na way to store your local data for that component and it is plane javascript object
     this.state={
      products: [
+      /* we dont need this data because we will fetch data from firebase
       {
       price:99,
       title:'Watch',
@@ -30,9 +32,35 @@ class App extends React.Component {
           img: 'https://images.unsplash.com/photo-1504707748692-419802cf939d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1330&q=80',
           id:3
           }
-     ]
-    }
-  
+          */
+
+     ],
+     loading:true
+    } 
+}
+componentDidMount(){
+firebase
+   .firestore()
+   .collection('products')
+   .get()
+   .then((snapshot)=>{
+    console.log(snapshot);
+
+    snapshot.docs.map((doc)=>{
+      console.log(doc.data());
+    });
+
+    const products =snapshot.docs.map((doc) => {
+      const data=doc.data();
+      data['id']=doc.id;
+      return data;
+    })
+
+    this.setState({
+      products,
+      loading:false
+    })
+   })
 }
 handleIncreaseQuantity =(product) => {
 //  console.log("hey increase the quantity of" ,product)
@@ -65,8 +93,8 @@ handleDecreaseQuantity =(product) => {
 
   handleDeleteProduct=(id)=>{
   const {products}=this.state;
-//filter will only retur product which doe not have the id which is passed here.
-  const items=products.filter((item)=>item.id !=id);
+//filter will only return product which doe not have the id which is passed here.
+  const items=products.filter((item)=>item.id !==id);
   this.setState({
     products:items
   })
@@ -89,11 +117,13 @@ handleDecreaseQuantity =(product) => {
 
     products.map((product)=>{
       cartTotal= cartTotal + product.qty * product.price
+
+      return ' '; 
     })
     return cartTotal;
   }
   render(){
-    const{products} =this.state;
+    const{products,loading} =this.state;
   return (
     <div className="App">
       <Navbar count={this.getCartCount()} / >
@@ -103,6 +133,7 @@ handleDecreaseQuantity =(product) => {
        onDecreaseQuantity={this.handleDecreaseQuantity}
        onDeleteProduct={this.handleDeleteProduct}
         />
+        {loading && <h1>Loading Products...</h1>}
       <div style={{padding: 10,fontSize: 20}}>TOTAL: {this.getCartTotal()}</div>
     </div>
   );
