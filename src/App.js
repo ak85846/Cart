@@ -39,11 +39,33 @@ class App extends React.Component {
     } 
 }
 componentDidMount(){
-firebase
-   .firestore()
-   .collection('products')
-   .get()
-   .then((snapshot)=>{
+/*//firebase
+  //  .firestore()
+  //  .collection('products')
+  //  .get()
+  //  .then((snapshot)=>{
+  //   console.log(snapshot);
+
+  //   snapshot.docs.map((doc)=>{
+  //     console.log(doc.data());
+  //   });
+
+  //   const products =snapshot.docs.map((doc) => {
+  //     const data=doc.data();
+  //     data['id']=doc.id;
+  //     return data;
+  //   })
+
+  //   this.setState({
+  //     products,
+  //     loading:false
+  //   })
+  //  }) */
+/*in the above code if we change anything in the firebase (for eg: qty) we have to refresh the page to see the update but here in the bottom code we have used onSnapshot() which is a eventlistener.it automatic update on the page without refreshing if we change anything in collection*/
+  firebase
+  .firestore()
+  .collection('products')
+  .onSnapshot((snapshot)=>{
     console.log(snapshot);
 
     snapshot.docs.map((doc)=>{
