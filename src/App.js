@@ -93,12 +93,25 @@ handleIncreaseQuantity =(product) => {
 const  { products } =this.state;
 const index=products.indexOf(product);
 
+/* this can only update on browser not on firebase  
 products[index].qty+=1;
 
 this.setState({
   //we should write products:products but here the key and vale have same name so shortcut is write one time
   products
+})*/
+//to update on firebase
+
+const docRef=this.db.collection('products').doc(products[index].id);
+
+docRef
+.update({
+  qty:products[index].qty + 1
 })
+.then(()=>{
+  console.log("Updated successfully ")
+})
+
 
 }
 handleDecreaseQuantity =(product) => {
@@ -171,7 +184,7 @@ handleDecreaseQuantity =(product) => {
   return (
     <div className="App">
       <Navbar count={this.getCartCount()} / >
-        <button onClick={this.addProduct} style={{paddding: 20,fontSize:20}}>Add a product</button>
+        {/* <button onClick={this.addProduct} style={{paddding: 20,fontSize:20}}>Add a product</button> */}
       <Cart 
       products={products}
        onIncreaseQuantity={this.handleIncreaseQuantity}
