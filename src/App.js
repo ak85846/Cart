@@ -35,8 +35,10 @@ class App extends React.Component {
           */
 
      ],
-     loading:true
+     loading:true,
     } 
+    //this is because we dont need to write firebase.firestore() again n again
+    this.db=firebase.firestore();
 }
 componentDidMount(){
 /*//firebase
@@ -62,8 +64,10 @@ componentDidMount(){
   //   })
   //  }) */
 /*in the above code if we change anything in the firebase (for eg: qty) we have to refresh the page to see the update but here in the bottom code we have used onSnapshot() which is a eventlistener.it automatic update on the page without refreshing if we change anything in collection*/
-  firebase
+  /* firebase
   .firestore()
+*/
+this.db
   .collection('products')
   .onSnapshot((snapshot)=>{
     console.log(snapshot);
@@ -144,11 +148,30 @@ handleDecreaseQuantity =(product) => {
     })
     return cartTotal;
   }
+
+  addProduct =() =>{
+    this.db.
+    collection('products')
+    .add({
+      img: '',
+      price:900,
+      qty:3,
+      title: 'Washing machine' 
+    })
+    //.add will return a promise and docref will have document reference of above code
+    .then((docRef)=>{
+      console.log('Product has been added',docRef);
+    })
+    .catch((error)=>{
+      console.log('Error',Error)
+    })
+  }
   render(){
     const{products,loading} =this.state;
   return (
     <div className="App">
       <Navbar count={this.getCartCount()} / >
+        <button onClick={this.addProduct} style={{paddding: 20,fontSize:20}}>Add a product</button>
       <Cart 
       products={products}
        onIncreaseQuantity={this.handleIncreaseQuantity}
