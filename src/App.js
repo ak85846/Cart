@@ -69,6 +69,20 @@ componentDidMount(){
 */
 this.db
   .collection('products')
+  /* it will show products on screen with price 999
+  .where('price','==',999)
+  */
+  /*it will show product on screen with title mug
+  .where('title','==','Mug')
+  */
+  /*it will show product on screen in increasing order
+ .orderBy('price')
+ */
+ 
+ /*it will show product on screen in decreasing order*/
+.orderBy('price','desc')
+
+
   .onSnapshot((snapshot)=>{
     console.log(snapshot);
 
@@ -111,8 +125,9 @@ docRef
 .then(()=>{
   console.log("Updated successfully ")
 })
-
-
+.catch((error)=>{
+  console.log('Error',Error)
+})
 }
 handleDecreaseQuantity =(product) => {
   //  console.log("hey decrease the quantity of" ,product)
@@ -121,21 +136,46 @@ handleDecreaseQuantity =(product) => {
   if(products[index].qty === 0){
     return;
   }
+  /*
   products[index].qty-=1;
   
   this.setState({
     //we should write products:products but here the key and vale have same name so shortcut is write one time
     products
   })
-  
+  */
+  const docRef=this.db.collection('products').doc(products[index].id);
+
+docRef
+.update({
+  qty:products[index].qty - 1
+})
+.then(()=>{
+  console.log("Updated successfully ")
+})
+.catch((error)=>{
+  console.log('Error',Error)
+})
   }
 
   handleDeleteProduct=(id)=>{
   const {products}=this.state;
 //filter will only return product which doe not have the id which is passed here.
+  /*
   const items=products.filter((item)=>item.id !==id);
   this.setState({
     products:items
+  })
+  */
+  const docRef=this.db.collection('products').doc(id);
+
+  docRef
+  .delete()
+  .then(()=>{
+    console.log("Deleted successfully ")
+  })
+  .catch((error)=>{
+    console.log('Error',Error)
   })
   }
 
@@ -166,10 +206,10 @@ handleDecreaseQuantity =(product) => {
     this.db.
     collection('products')
     .add({
-      img: '',
-      price:900,
+      img: 'https://images.unsplash.com/photo-1590080876209-c70d0f0bf6a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzV8fE11Z3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60',
+      price:2999,
       qty:3,
-      title: 'Washing machine' 
+      title: 'Mug' 
     })
     //.add will return a promise and docref will have document reference of above code
     .then((docRef)=>{
@@ -184,7 +224,7 @@ handleDecreaseQuantity =(product) => {
   return (
     <div className="App">
       <Navbar count={this.getCartCount()} / >
-        {/* <button onClick={this.addProduct} style={{paddding: 20,fontSize:20}}>Add a product</button> */}
+        <button onClick={this.addProduct} style={{paddding: 20,fontSize:20}}>Add a product</button>
       <Cart 
       products={products}
        onIncreaseQuantity={this.handleIncreaseQuantity}
